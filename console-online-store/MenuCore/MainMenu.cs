@@ -20,26 +20,46 @@ namespace console_online_store.MenuCore
         static State state = State.Guest;
         public static void Start()
         {
-            bool showMenu = true;
+            bool showGuestMenu = true;
+            bool showAdminMenu = true;
             while (true)
             {
                 if (state == State.Guest)
                 {
-                    if (showMenu)
+                    if (showGuestMenu)
                     {
                         GuestMenuBuilder.DisplayMenuItems();
-                        showMenu = false;
+                        showGuestMenu = false;
                     }
 
                     var key = Console.ReadKey(true).Key;
 
                     if (key == ConsoleKey.Escape)
                     {
-                        showMenu = true;
+                        showGuestMenu = true;
                         Console.Clear();
                         continue;
                     }
-                    GuestInputHandler.CheckInput(key, state);
+                   
+                    GuestInputHandler.CheckInput(key, ref state, ref showAdminMenu);
+                }
+                if (state == State.Admin)
+                {
+                    if (showAdminMenu)
+                    {
+                        AdminMenuBuilder.DisplayMenuItems();
+                        showAdminMenu = false;
+                    }
+
+                    var key = Console.ReadKey(true).Key;
+
+                    if (key == ConsoleKey.Escape)
+                    {
+                        showAdminMenu = true;
+                        Console.Clear();
+                        continue;
+                    }
+                    AdminInputHandler.CheckInput(key, ref state, ref showGuestMenu);
                 }
             }
         }

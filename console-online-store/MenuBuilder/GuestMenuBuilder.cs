@@ -39,34 +39,36 @@ namespace console_online_store.MenuBuilder
 
         //if guest can login then change state into State.User or State.Admin
         //login will use controller to check for a user in a database
-        public static void Login(State state) 
+        public static void Login(ref State state, ref bool flag) 
         {
             Console.WriteLine("Login:");
             var x = Console.ReadLine();
             if (x == "user") state = State.User;
             if (x == "admin") state = State.Admin;
+            if (state != State.Guest) Console.Clear();
+            flag = true;
         }
 
         //if guest will register then change state into State.User
-        public static void Register(State state)
+        public static void Register(ref State state)
         {
             Console.WriteLine("Register:");
             var x = Console.ReadLine();
             Console.WriteLine(x);
         }
 
-        public static void Draw(ConsoleKey key, State state)
+        public static void Draw(ConsoleKey key,ref State state, ref bool flag)
         {
             switch (key)
             {
                 case ConsoleKey.F1:
-                    Login(state);
+                    Login(ref state, ref flag);
                     break;
                 case ConsoleKey.F2:
                     ShowProducts();
                     break;
                 case ConsoleKey.F3:
-                    Register(state);
+                    Register(ref state);
                     break;
                 default:
                     DisplayMenuItems();
