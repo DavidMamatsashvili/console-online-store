@@ -24,7 +24,6 @@ namespace console_online_store.InputHandlers
                 case ConsoleKey.F3:
                     GuestMenuBuilder.Draw(key,state);
                     break;
-
             }
         }
     }

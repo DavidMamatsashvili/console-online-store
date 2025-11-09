@@ -5,6 +5,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using console_online_store.Data;
 using console_online_store.InputHandlers;
 using console_online_store.MenuCore;
 
@@ -29,6 +30,7 @@ namespace console_online_store.MenuBuilder
         //showproducts will use dbcontext to display products
         public static void ShowProducts()
         {
+            using var context = new StoreDbContext();
             for(int i = 0; i < 3; i++)
             {
                 Console.WriteLine($"product{i + 1}:iphone");
@@ -41,7 +43,8 @@ namespace console_online_store.MenuBuilder
         {
             Console.WriteLine("Login:");
             var x = Console.ReadLine();
-            Console.WriteLine(x);
+            if (x == "user") state = State.User;
+            if (x == "admin") state = State.Admin;
         }
 
         //if guest will register then change state into State.User
