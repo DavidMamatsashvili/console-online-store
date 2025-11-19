@@ -29,6 +29,7 @@ namespace console_online_store.Repository.Implementations
                 Balance = user.Balance,
                 UserRoleId = 2,
                 CreatedAt = DateTime.UtcNow,
+                IsBanned = false,
             };
             _dbContext.Users.Add(newuser);
             await _dbContext.SaveChangesAsync();
