@@ -34,7 +34,6 @@ namespace console_online_store.Repository.Implementations
             return order;
         }
 
-
         public async Task<CustomerOrder> ChangeOrderState(int id, int state)
         {
             CustomerOrder? oldorder = await _dbContext.CustomerOrders.FindAsync(id);
