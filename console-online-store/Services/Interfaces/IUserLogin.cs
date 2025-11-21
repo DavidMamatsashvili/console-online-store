@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Dto;
 using console_online_store.MenuCore;
+using console_online_store.Models;
 
 namespace console_online_store.Services.Interfaces
 {
     public interface IUserLogin
     {
-        Task<UserDto> LoginUser(string login, string password, MenuContext context);
+        Task<User> LoginUser(string login, string password, MenuContext context);
         Task LogOutUser(MenuContext context);
     }
 }
