@@ -8,7 +8,7 @@ using console_online_store.Models;
 
 namespace console_online_store.Services.Interfaces
 {
-    public interface IUserRegistration
+    public interface IUserRegistrationService
     {
         Task<UserDto> CreateUser(UserDto user);
 

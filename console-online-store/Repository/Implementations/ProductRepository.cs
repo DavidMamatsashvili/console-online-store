@@ -53,6 +53,7 @@ namespace console_online_store.Repository.Implementations
         public async Task<bool> DeleteProduct(int id)
         {
             Product? product = await _dbContext.Products.FindAsync(id);
+            if (product == null) return false;
             _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
             return true;

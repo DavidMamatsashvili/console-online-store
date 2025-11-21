@@ -9,9 +9,8 @@ using console_online_store.Models;
 
 namespace console_online_store.Services.Interfaces
 {
-    public interface IUserLogin
+    public interface IUserLoginService
     {
-        Task<User> LoginUser(string login, string password, MenuContext context);
-        Task LogOutUser(MenuContext context);
+        Task<User> LoginUser(string login, string password);
     }
 }

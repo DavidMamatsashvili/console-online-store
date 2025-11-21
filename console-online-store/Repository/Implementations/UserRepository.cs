@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Data;
 using console_online_store.Dto;
 using console_online_store.Models;
 using console_online_store.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace console_online_store.Repository.Implementations
 {
@@ -16,6 +18,11 @@ namespace console_online_store.Repository.Implementations
         public UserRepository(StoreDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<User> Login(string login)
+        {
+            return await _dbContext.Users?.SingleOrDefaultAsync(x=>x.Login==login);
         }
 
         public async Task<User> CreateUser(UserDto user)
@@ -50,6 +57,11 @@ namespace console_online_store.Repository.Implementations
             user.IsBanned = false;
             await _dbContext.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<bool> CheckIfUserExists(string login)
+        {
+            return await _dbContext.Users.AnyAsync(user => user.Login == login);
         }
     }
 }

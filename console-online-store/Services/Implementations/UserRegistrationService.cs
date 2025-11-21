@@ -7,17 +7,18 @@ using console_online_store.Data;
 using console_online_store.Dto;
 using console_online_store.Models;
 using console_online_store.Repository.Implementations;
+using console_online_store.Repository.Interfaces;
 using console_online_store.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace console_online_store.Services.Implementations
 {
-    public class UserRegistration:IUserRegistration
+    public class UserRegistrationService:IUserRegistrationService
     {
-        private readonly StoreDbContext _dbContext;
-        public UserRegistration(StoreDbContext dbContext)
+        private readonly IUserRepository _repo;
+        public UserRegistrationService(IUserRepository repo)
         {
-            _dbContext = dbContext;
+            _repo = repo;
         }
         public async Task<UserDto> CreateUser(UserDto user)
         {
@@ -30,14 +31,13 @@ namespace console_online_store.Services.Implementations
                 user.Balance < 0) return null;
 
             //check if there is another user with the same login
-            bool exists = await _dbContext.Users.AnyAsync(x => x.Login == user.Login);
+            bool exists = await _repo.CheckIfUserExists(user.Login);
             if (exists) return null;
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.PasswordHash = passwordHash;
 
-            var repository = new UserRepository(_dbContext);
-            await repository.CreateUser(user);
+            await _repo.CreateUser(user);
             return user;
         }
     }
