@@ -10,19 +10,19 @@ namespace console_online_store.InputHandlers
 {
     public static class GuestInputHandler
     {
-        public static void CheckInput(ConsoleKey key, ref State state, ref bool flag)
+        public static void CheckInput(ConsoleKey key, MenuContext context)
         {
             //GuestMenuBuilder.Draw(key);
             switch (key)
             {
                 case ConsoleKey.F1:
-                    GuestMenuBuilder.Draw(key,ref state, ref flag);
+                    GuestMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F2:
-                    GuestMenuBuilder.Draw(key,ref state, ref flag);
+                    GuestMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F3:
-                    GuestMenuBuilder.Draw(key,ref state, ref flag);
+                    GuestMenuBuilder.Draw(key, context);
                     break;
             }
         }

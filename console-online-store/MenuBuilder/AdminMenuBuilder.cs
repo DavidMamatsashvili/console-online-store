@@ -41,10 +41,11 @@ namespace console_online_store.MenuBuilder
             }
         }
 
-        public static void Logout(ref State state, ref bool flag)
+        public static void Logout(MenuContext context)
         {
-            state = State.Guest;
-            flag = true;
+            context.State = State.Guest;
+            context.showGuestMenu = true;
+            context.showAdminMenu = false;
             Console.Clear();
         }
 
@@ -53,12 +54,12 @@ namespace console_online_store.MenuBuilder
             
         }
 
-        public static void Draw(ConsoleKey key, ref State state,ref bool flag)
+        public static void Draw(ConsoleKey key, MenuContext context)
         {
             switch (key)
             {
                 case ConsoleKey.F1:
-                    Logout(ref state,ref flag);
+                    Logout(context);
                     break;
                 case ConsoleKey.F2:
                     ShowProducts();

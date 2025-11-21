@@ -14,52 +14,57 @@ namespace console_online_store.MenuCore
         User,
         Admin
     };
+    public class MenuContext
+    {
+        public State State { get; set; } = State.Guest;
+        public bool showGuestMenu { get; set; } = true;
+        public bool showAdminMenu { get; set; } = false;
+    }
 
     public static class MainMenu
     {
-        static State state = State.Guest;
         public static void Start()
         {
-            bool showGuestMenu = true;
-            bool showAdminMenu = true;
+            MenuContext context = new MenuContext();
+
             while (true)
             {
-                if (state == State.Guest)
+                if (context.State == State.Guest)
                 {
-                    if (showGuestMenu)
+                    if (context.showGuestMenu)
                     {
                         GuestMenuBuilder.DisplayMenuItems();
-                        showGuestMenu = false;
+                        context.showGuestMenu = false;
                     }
 
                     var key = Console.ReadKey(true).Key;
 
                     if (key == ConsoleKey.Escape)
                     {
-                        showGuestMenu = true;
+                        context.showGuestMenu = true;
                         Console.Clear();
                         continue;
                     }
-                   
-                    GuestInputHandler.CheckInput(key, ref state, ref showAdminMenu);
+
+                    GuestInputHandler.CheckInput(key, context);
                 }
-                if (state == State.Admin)
+                if (context.State == State.Admin)
                 {
-                    if (showAdminMenu)
+                    if (context.showAdminMenu)
                     {
                         AdminMenuBuilder.DisplayMenuItems();
-                        showAdminMenu = false;
+                        context.showAdminMenu = false;
                     }
 
                     var key = Console.ReadKey(true).Key;
 
                     if (key == ConsoleKey.Escape)
                     {
-                        showAdminMenu = true;
+                        context.showAdminMenu = true;
                         Console.Clear();
                         continue;
                     }
-                    AdminInputHandler.CheckInput(key, ref state, ref showGuestMenu);
+                    AdminInputHandler.CheckInput(key, context);
                 }
             }
         }

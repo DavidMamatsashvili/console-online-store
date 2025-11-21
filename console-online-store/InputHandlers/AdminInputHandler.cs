@@ -10,19 +10,19 @@ namespace console_online_store.InputHandlers
 {
     public static class AdminInputHandler
     {
-        public static void CheckInput(ConsoleKey key, ref State state, ref bool flag)
+        public static void CheckInput(ConsoleKey key, MenuContext context)
         {
-            //GuestMenuBuilder.Draw(key);
+            //GuestMenuBuilder.Draw(key, context);
             switch (key)
             {
                 case ConsoleKey.F1:
-                    AdminMenuBuilder.Draw(key, ref state, ref flag);
+                    AdminMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F2:
-                    AdminMenuBuilder.Draw(key, ref state, ref flag);
+                    AdminMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F3:
-                    AdminMenuBuilder.Draw(key, ref state, ref flag);
+                    AdminMenuBuilder.Draw(key, context);
                     break;
             }
         }
