@@ -19,6 +19,7 @@ namespace console_online_store.MenuCore
         public State State { get; set; } = State.Guest;
         public bool showGuestMenu { get; set; } = true;
         public bool showAdminMenu { get; set; } = false;
+        public bool showUserMenu { get; set; } = false;
     }
 
     public static class MainMenu
