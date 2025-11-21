@@ -15,12 +15,10 @@ namespace console_online_store.Dto
 
         public string Login { get; set; } = null!;
 
+        public string Password { get; set; } = null!;
+
         public string PasswordHash { get; set; } = null!;
 
         public decimal Balance { get; set; }
-
-        public int UserRoleId { get; set; }
-
-        public DateTime CreatedAt { get; set; }
     }
 }

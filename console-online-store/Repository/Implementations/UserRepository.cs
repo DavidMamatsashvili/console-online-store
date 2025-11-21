@@ -36,5 +36,20 @@ namespace console_online_store.Repository.Implementations
             return newuser;
         }
 
+        public async Task<User> BanUser(int userid)
+        {
+            User? user = await _dbContext.Users.FindAsync(userid);
+            user.IsBanned = true;
+            await _dbContext.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<User> UnbanUser(int userid)
+        {
+            User? user = await _dbContext.Users.FindAsync(userid);
+            user.IsBanned = false;
+            await _dbContext.SaveChangesAsync();
+            return user;
+        }
     }
 }

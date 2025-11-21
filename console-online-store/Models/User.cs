@@ -20,6 +20,7 @@ public partial class User
     public int UserRoleId { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
     public bool IsBanned { get; set; }
 
     public virtual Cart? Cart { get; set; }

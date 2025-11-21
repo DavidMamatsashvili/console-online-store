@@ -10,7 +10,7 @@ namespace console_online_store.Services.Interfaces
 {
     public interface IUserRegistration
     {
-        Task<User> CreateUser(UserDto user);
+        Task<UserDto> CreateUser(UserDto user);
 
     }
 }
