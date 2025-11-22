@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Data;
@@ -19,6 +20,11 @@ namespace console_online_store.Repository.Implementations
             _dbContext = dbContext;
         }
 
+        public async Task<Cart> GetCartById(int cartid)
+        {
+            Cart? cart = await _dbContext.Carts.FindAsync(cartid);
+            return cart;
+        }
         public async Task<IEnumerable<CartItem>> GetAllProductsFromCart(int id)
         {
             IEnumerable<CartItem>? items = await _dbContext.CartItems
@@ -47,10 +53,47 @@ namespace console_online_store.Repository.Implementations
                 .Include(x => x.CartItems)
                 .FirstOrDefaultAsync(y => y.Id == cartId);
 
+            if (currentCart == null) return null;
+
             CartItem? item = currentCart?.CartItems.SingleOrDefault(x => x.Id == cartItemId);
+            if (item == null) return null;
+
             currentCart?.CartItems.Remove(item);
             await _dbContext.SaveChangesAsync();
             return currentCart;
+        }
+        public async Task<CartItem> EditCartItem(int cartId, int cartItemId, CartItemDto cartitem)
+        {
+            Cart? cart = await _dbContext.Carts.Include(x => x.CartItems).SingleOrDefaultAsync(x => x.Id == cartId);
+            CartItem? item = cart?.CartItems.SingleOrDefault(y => y.Id == cartItemId);
+            item.Quantity = cartitem.Quantity;
+            await _dbContext.SaveChangesAsync();
+            return item;
+        }
+        public async Task<bool> CheckIfCartExists(int cartid)
+        {
+            Cart? cart = await _dbContext.Carts.FindAsync(cartid);
+            if (cart == null) return false;
+            return true;
+        }
+        public async Task<bool> CheckIfCartHasThisProduct(int cartId, int productId)
+        {
+            Cart? cart = await _dbContext.Carts.Include(x => x.CartItems).SingleOrDefaultAsync(x => x.Id == cartId);
+            CartItem? cartitem = cart.CartItems.SingleOrDefault(x => x.Id == productId);
+
+            if (cartitem == null) return false;
+            return true;
+        }
+        public async Task<bool> CheckIfCartItemExists(int cartId, int cartItemId)
+        {
+            bool checkcart = await CheckIfCartExists(cartId);
+            if (!checkcart) return false;
+
+            Cart? cart = await _dbContext.Carts.Include(x =>x.CartItems).SingleOrDefaultAsync(x =>x.Id == cartId);
+            if (cart == null) return false;
+
+            bool exists = cart.CartItems.Any(x => x.Id == cartItemId);
+            return exists;
         }
     }
 }

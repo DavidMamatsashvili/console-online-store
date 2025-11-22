@@ -23,7 +23,6 @@ namespace console_online_store.Repository.Implementations
             IEnumerable<Product> products = await _dbContext.Products.ToListAsync();
             return products;
         }
-
         public async Task<Product> GetProductById(int id)
         {
             Product? product = await _dbContext.Products.FindAsync(id);
@@ -56,6 +55,12 @@ namespace console_online_store.Repository.Implementations
             if (product == null) return false;
             _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> CheckIfProductExists(int id)
+        {
+            Product? product = await _dbContext.Products.FindAsync(id);
+            if (product == null) return false;
             return true;
         }
     }

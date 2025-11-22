@@ -17,5 +17,6 @@ namespace console_online_store.Repository.Interfaces
         Task<Product> AddProduct(ProductDto product);
         Task<bool> UpdateProduct(int id, ProductDto product);
         Task<bool> DeleteProduct(int id);
+        Task<bool> CheckIfProductExists(int id);
     }
 }
