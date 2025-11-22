@@ -22,14 +22,15 @@ namespace console_online_store.Repository.Implementations
         public async Task<CustomerOrder> CancelOrderByUser(int id)
         {
             CustomerOrder? order = await _dbContext.CustomerOrders.FindAsync(id);
-            order.OrderStateId = 3;
+            order.OrderStateId = 2;
             await _dbContext.SaveChangesAsync();
             return order;
         }
+
         public async Task<CustomerOrder> CancelOrderByAdministrator(int id)
         {
             CustomerOrder? order = await _dbContext.CustomerOrders.FindAsync(id);
-            order.OrderStateId = 4;
+            order.OrderStateId = 3;
             await _dbContext.SaveChangesAsync();
             return order;
         }
@@ -64,6 +65,12 @@ namespace console_online_store.Repository.Implementations
         {
             IEnumerable<CustomerOrder> orders = await _dbContext.CustomerOrders.ToListAsync();
             return orders;
+        }
+
+        public async Task<bool> CheckIfOrderExists(int id)
+        {
+            bool exists = await _dbContext.CustomerOrders.AnyAsync(x => x.Id == id);
+            return exists;
         }
     }
 }

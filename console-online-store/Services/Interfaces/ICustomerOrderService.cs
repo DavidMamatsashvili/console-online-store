@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using console_online_store.Dto;
 using console_online_store.Models;
 
-namespace console_online_store.Repository.Interfaces
+namespace console_online_store.Services.Interfaces
 {
-    public interface ICustomerOrderRepository
+    public interface ICustomerOrderService
     {
         Task<IEnumerable<CustomerOrder>> GetAllOrders();
-        Task<CustomerOrder> GetOrderById(int id);
-        Task<CustomerOrder> CreateOrder(CustomerOrderDto order);
+        Task<CustomerOrder> GetCustomerOrderById(int id);
+        Task<CustomerOrder> CreateCustomerOrder(CustomerOrderDto order);
+        Task<CustomerOrder> ChangeOrderState(int id, int state);
         Task<CustomerOrder> CancelOrderByUser(int id);
         Task<CustomerOrder> CancelOrderByAdministrator(int id);
-        Task<CustomerOrder> ChangeOrderState(int id, int state);
-        Task<bool> CheckIfOrderExists(int id);
+        Task<bool> CheckIfCustomerOrderExist(int id);
     }
 }
