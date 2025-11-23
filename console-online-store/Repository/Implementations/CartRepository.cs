@@ -20,9 +20,20 @@ namespace console_online_store.Repository.Implementations
             _dbContext = dbContext;
         }
 
-        public async Task<Cart> GetCartById(int cartid)
+        public async Task<Cart> CreateCart(int userid)
         {
-            Cart? cart = await _dbContext.Carts.FindAsync(cartid);
+            Cart cart = new Cart()
+            {
+                UserId = userid,
+                CreatedAt = DateTime.UtcNow,
+            };
+            _dbContext.Carts.Add(cart);
+            await _dbContext.SaveChangesAsync();
+            return cart;
+        }
+        public async Task<Cart> GetCartById(int userid)
+        {
+            Cart? cart = await _dbContext.Carts.Include(x => x.CartItems).SingleAsync(x => x.UserId == userid);
             return cart;
         }
         public async Task<IEnumerable<CartItem>> GetAllProductsFromCart(int id)
@@ -94,6 +105,16 @@ namespace console_online_store.Repository.Implementations
 
             bool exists = cart.CartItems.Any(x => x.Id == cartItemId);
             return exists;
+        }
+        public async Task<decimal> GetTotalAmount(int cartId)
+        {
+            Cart? cart = await GetCartById(cartId);
+            decimal total = 0;
+            foreach(var item in cart.CartItems)
+            {
+                total += item.UnitPrice;
+            }
+            return total;
         }
     }
 }

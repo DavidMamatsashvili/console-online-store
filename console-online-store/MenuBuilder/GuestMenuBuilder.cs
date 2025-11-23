@@ -12,15 +12,15 @@ using console_online_store.Models;
 
 namespace console_online_store.MenuBuilder
 {
-    public static class GuestMenuBuilder
-    {
-        public static Dictionary<ConsoleKey,string>Items = new Dictionary<ConsoleKey, string>
+    public class GuestMenuBuilder
+    {  
+        public Dictionary<ConsoleKey,string>Items = new Dictionary<ConsoleKey, string>
         {
             { ConsoleKey.F1, "Login" },
             { ConsoleKey.F2, "Show Products" },
             { ConsoleKey.F3, "Register" }
         };
-        public static void DisplayMenuItems()
+        public void DisplayMenuItems()
         {
             foreach (var i in Items)
             {
@@ -29,7 +29,7 @@ namespace console_online_store.MenuBuilder
         }
 
         //showproducts will use dbcontext to display products
-        public static void ShowProducts()
+        public void ShowProducts()
         {
             using var context = new StoreDbContext();
             for(int i = 0; i < 3; i++)
@@ -40,7 +40,7 @@ namespace console_online_store.MenuBuilder
 
         //if guest can login then change state into State.User or State.Admin
         //login will use controller to check for a user in a database
-        public static void Login(MenuContext context) 
+        public void Login(MenuContext context) 
         {
             Console.WriteLine("Login:");
             var x = Console.ReadLine();
@@ -66,14 +66,14 @@ namespace console_online_store.MenuBuilder
         }
 
         //if guest will register then change state into State.User
-        public static void Register()
+        public void Register()
         {
             Console.WriteLine("Register:");
             var x = Console.ReadLine();
             Console.WriteLine(x);
         }
 
-        public static void Draw(ConsoleKey key, MenuContext context)
+        public void Draw(ConsoleKey key, MenuContext context)
         {
             switch (key)
             {

@@ -72,5 +72,20 @@ namespace console_online_store.Repository.Implementations
             bool exists = await _dbContext.CustomerOrders.AnyAsync(x => x.Id == id);
             return exists;
         }
+        public async Task<IEnumerable<CustomerOrder>> GetOrdersFromUser(int userid)
+        {
+            IEnumerable<CustomerOrder>? orders = await _dbContext.CustomerOrders.Include(x => x.CustomerOrderDetails).Where(x => x.CustomerId == userid).ToListAsync();
+            return orders;
+        }
+        public async Task<OrderState> GetOrderState(int id)
+        {
+            OrderState? state = await _dbContext.OrderStates.FindAsync(id);
+            return state;
+        }
+        public async Task<IEnumerable<OrderState>> GetStates()
+        {
+            IEnumerable<OrderState> states = await _dbContext.OrderStates.ToListAsync();
+            return states;
+        }
     }
 }

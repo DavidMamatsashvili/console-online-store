@@ -15,5 +15,7 @@ namespace console_online_store.Services.Interfaces
         Task<ProductDto> AddProduct(ProductDto product);
         Task<ProductDto> UpdateProduct(int id, ProductDto product);
         Task<bool> DeleteProduct(int id);
+        Task<Manufacturer> GetProductManufacturerById(int id);
+        Task<ProductTitle> GetProductTitleById(int id);
     }
 }

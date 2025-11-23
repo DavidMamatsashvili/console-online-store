@@ -19,7 +19,13 @@ namespace console_online_store.Services.Implementations
             _cartRepository = cartrepo;
             _productRepository = productrepo;
         }
-
+        
+        public async Task<Cart> CreateCart(int userid)
+        {
+            if (userid <= 0) return null;
+            Cart? cart = await _cartRepository.CreateCart(userid);
+            return cart;
+        }
         public async Task<Cart> GetCartById(int cartid)
         {
             if (cartid <= 0) return null;
@@ -65,6 +71,43 @@ namespace console_online_store.Services.Implementations
             CartItem updatedItem = await _cartRepository.EditCartItem(cartId, cartItemId, cartitem);
             
             return updatedItem;
+        }
+        public async Task<bool> CheckIfCartHasThisProduct(int cartId, int productId)
+        {
+            if (cartId <= 0 || productId <= 0) return false;
+            bool productExists = await _productRepository.CheckIfProductExists(productId);
+            bool checkIfCartExists = await _cartRepository.CheckIfCartExists(cartId);
+            if (!productExists || checkIfCartExists) return false;
+
+            bool checkIfCartHasThisProduct = await _cartRepository.CheckIfCartHasThisProduct(cartId, productId);
+            
+            if(!checkIfCartHasThisProduct) return false;
+            return true;
+        }
+        public async Task<bool> CheckIfCartExists(int cartId)
+        {
+            if (cartId <= 0) return false;
+            bool exists = await _cartRepository.CheckIfCartExists(cartId);
+            if (!exists) return false;
+            return true;
+        }
+        public async Task<bool> CheckIfCartItemExists(int cartId, int itemId)
+        {
+            if (cartId <= 0 || itemId <= 0) return false;
+
+            bool productExists = await _productRepository.CheckIfProductExists(itemId);
+            bool checkIfCartExists = await _cartRepository.CheckIfCartExists(cartId);
+            if (!productExists || checkIfCartExists) return false;
+
+            bool checkIfCartItemExists = await _cartRepository.CheckIfCartItemExists(cartId, itemId);
+            if(!checkIfCartItemExists) return false;
+            return true;
+        }
+        public async Task<decimal> GetTotalAmount(int cartId)
+        {
+            if (cartId <= 0) return 0;
+            decimal total = await _cartRepository.GetTotalAmount(cartId);
+            return total;
         }
     }
 }

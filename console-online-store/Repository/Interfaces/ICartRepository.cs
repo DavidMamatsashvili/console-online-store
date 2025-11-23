@@ -10,7 +10,8 @@ namespace console_online_store.Repository.Interfaces
 {
     public interface ICartRepository
     {
-        Task<Cart> GetCartById(int cartid);
+        Task<Cart> CreateCart(int userid);
+        Task<Cart> GetCartById(int userid);
         Task<IEnumerable<CartItem>> GetAllProductsFromCart(int id);
         Task<Cart> AddProduct(int cartId,int productId);
         Task<Cart> RemoveProduct(int cartId, int cartItemId);
@@ -18,5 +19,6 @@ namespace console_online_store.Repository.Interfaces
         Task<bool> CheckIfCartHasThisProduct(int cartId, int productId);
         Task<bool> CheckIfCartExists(int cartId);
         Task<bool> CheckIfCartItemExists(int cartId, int itemId);
+        Task<decimal> GetTotalAmount(int cartId);
     }
 }

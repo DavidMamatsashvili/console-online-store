@@ -63,5 +63,15 @@ namespace console_online_store.Repository.Implementations
             if (product == null) return false;
             return true;
         }
+        public async Task<Manufacturer> GetProductManufacturerById(int id)
+        {
+            Manufacturer? manufacturer = await _dbContext.Manufacturers.SingleOrDefaultAsync(x => x.Id == id);
+            return manufacturer;
+        }
+        public async Task<ProductTitle> GetProductTitleById(int id)
+        {
+            ProductTitle? title = await _dbContext.ProductTitles.SingleOrDefaultAsync(x=>x.Id == id);
+            return title;
+        }
     }
 }

@@ -17,5 +17,8 @@ namespace console_online_store.Repository.Interfaces
         Task<CustomerOrder> CancelOrderByAdministrator(int id);
         Task<CustomerOrder> ChangeOrderState(int id, int state);
         Task<bool> CheckIfOrderExists(int id);
+        Task<IEnumerable<CustomerOrder>> GetOrdersFromUser(int userId);
+        Task<OrderState> GetOrderState(int id);
+        Task<IEnumerable<OrderState>> GetStates();
     }
 }

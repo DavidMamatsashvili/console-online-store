@@ -20,6 +20,7 @@ namespace console_online_store.MenuCore
         public bool showGuestMenu { get; set; } = true;
         public bool showAdminMenu { get; set; } = false;
         public bool showUserMenu { get; set; } = false;
+        public int UserId { get; set; }
     }
 
     public static class MainMenu
@@ -27,6 +28,8 @@ namespace console_online_store.MenuCore
         public static void Start()
         {
             MenuContext context = new MenuContext();
+            GuestMenuBuilder guestMenuBuilder = new GuestMenuBuilder();
+            GuestInputHandler guestInputHandler = new GuestInputHandler();
 
             while (true)
             {
@@ -34,7 +37,7 @@ namespace console_online_store.MenuCore
                 {
                     if (context.showGuestMenu)
                     {
-                        GuestMenuBuilder.DisplayMenuItems();
+                        guestMenuBuilder.DisplayMenuItems();
                         context.showGuestMenu = false;
                     }
 
@@ -47,7 +50,7 @@ namespace console_online_store.MenuCore
                         continue;
                     }
 
-                    GuestInputHandler.CheckInput(key, context);
+                    guestInputHandler.CheckInput(key, context, guestMenuBuilder);
                 }
                 if (context.State == State.Admin)
                 {

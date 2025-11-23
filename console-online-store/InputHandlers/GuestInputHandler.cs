@@ -8,21 +8,21 @@ using console_online_store.MenuCore;
 
 namespace console_online_store.InputHandlers
 {
-    public static class GuestInputHandler
+    public class GuestInputHandler
     {
-        public static void CheckInput(ConsoleKey key, MenuContext context)
+        public void CheckInput(ConsoleKey key, MenuContext context, GuestMenuBuilder guestMenuBuilder)
         {
             //GuestMenuBuilder.Draw(key);
             switch (key)
             {
                 case ConsoleKey.F1:
-                    GuestMenuBuilder.Draw(key, context);
+                    guestMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F2:
-                    GuestMenuBuilder.Draw(key, context);
+                    guestMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F3:
-                    GuestMenuBuilder.Draw(key, context);
+                    guestMenuBuilder.Draw(key, context);
                     break;
             }
         }

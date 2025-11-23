@@ -71,5 +71,23 @@ namespace console_online_store.Services.Implementations
             bool exists = await _orderRepository.CheckIfOrderExists(id);
             return exists;
         }
+
+        public async Task<IEnumerable<CustomerOrder>> GetOrdersFromUser(int userid)
+        {
+            if (userid <= 0) return null;
+            IEnumerable<CustomerOrder> orders = await _orderRepository.GetOrdersFromUser(userid);
+            return orders;
+        }
+
+        public async Task<OrderState> GetOrderState(int id)
+        {
+            if (id <= 0) return null;
+            OrderState state = await _orderRepository.GetOrderState(id);
+            return state;
+        }
+        public async Task<IEnumerable<OrderState>> GetStates()
+        {
+            return await _orderRepository.GetStates();
+        }
     }
 }
