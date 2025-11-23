@@ -3,27 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using console_online_store.Controllers;
 using console_online_store.Data;
 using console_online_store.MenuCore;
 using console_online_store.Models;
 
 namespace console_online_store.MenuBuilder
 {
-    public static class AdminMenuBuilder
+    public class AdminMenuBuilder
     {
-        public static Dictionary<ConsoleKey, string> Items = new Dictionary<ConsoleKey, string>
+        public Dictionary<ConsoleKey, string> Items = new Dictionary<ConsoleKey, string>
         {
             { ConsoleKey.F1, "Logout" },
-            { ConsoleKey.F2, "Show Products" },
-            { ConsoleKey.F3, "Add product" },
+            { ConsoleKey.F2, "Show Product List" },
+            { ConsoleKey.F3, "Edit Product List" },
             { ConsoleKey.F4, "Show order list" },
-            { ConsoleKey.F5, "Cancel order" },
-            { ConsoleKey.F6, "Change order state" },
-            { ConsoleKey.F7, "User roles" },
-            { ConsoleKey.F8, "Order States" },
+            { ConsoleKey.F5, "Change order" },
+            { ConsoleKey.F6, "Ban user" },
+            { ConsoleKey.F7, "Unban user" },
             { ConsoleKey.Escape, "Or press <Esc> to return" }
         };
-        public static void DisplayMenuItems()
+        public LoginController LoginController { get; set; }
+        public ProductController ProductController { get; set; }
+        public OrderController OrderController { get; set; }
+        public BanController BanController { get; set; }
+
+        public AdminMenuBuilder(LoginController loginController, ProductController productController, OrderController orderController, BanController banController)
+        {
+            LoginController = loginController;
+            ProductController = productController;
+            OrderController = orderController;
+            BanController = banController;
+        }
+
+        public void DisplayMenuItems()
         {
             for (int i = 0; i < Items.Count - 1; i++) 
             {
@@ -32,7 +45,7 @@ namespace console_online_store.MenuBuilder
             Console.WriteLine(Items.ElementAt(Items.Count - 1).Value);
         }
 
-        public static void ShowProducts()
+        public void ShowProducts()
         {
             using var context = new StoreDbContext();
             for (int i = 0; i < 3; i++)
@@ -41,7 +54,7 @@ namespace console_online_store.MenuBuilder
             }
         }
 
-        public static void Logout(MenuContext context)
+        public void Logout(MenuContext context)
         {
             context.State = State.Guest;
             context.showGuestMenu = true;
@@ -49,23 +62,38 @@ namespace console_online_store.MenuBuilder
             Console.Clear();
         }
 
-        public static void Esc()
+        public void Esc()
         {
             
         }
 
-        public static void Draw(ConsoleKey key, MenuContext context)
+        public async Task Draw(ConsoleKey key, MenuContext context)
         {
             switch (key)
             {
                 case ConsoleKey.F1:
-                    Logout(context);
+                    //Logout(context);
+                    await LoginController.Logout();
                     break;
                 case ConsoleKey.F2:
-                    ShowProducts();
+                    //ShowProducts();
+                    await ProductController.ShowAllProducts();
                     break;
                 case ConsoleKey.F3:
                     //Register(state);
+                    await ProductController.EditProductList();
+                    break;
+                case ConsoleKey.F4:
+                    await OrderController.ShowOrders();
+                    break;
+                case ConsoleKey.F5:
+                    await OrderController.ChangeOrderByAdministrator();
+                    break;
+                case ConsoleKey.F6:
+                    await BanController.BanUser();
+                    break;
+                case ConsoleKey.F7:
+                    await BanController.UnbanUser();
                     break;
                 default:
                     DisplayMenuItems();

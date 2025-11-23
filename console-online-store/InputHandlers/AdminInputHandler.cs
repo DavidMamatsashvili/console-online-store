@@ -8,21 +8,21 @@ using console_online_store.MenuCore;
 
 namespace console_online_store.InputHandlers
 {
-    public static class AdminInputHandler
+    public class AdminInputHandler
     {
-        public static void CheckInput(ConsoleKey key, MenuContext context)
+        public async Task CheckInput(ConsoleKey key, MenuContext context, AdminMenuBuilder adminMenuBuilder)
         {
             //GuestMenuBuilder.Draw(key, context);
             switch (key)
             {
                 case ConsoleKey.F1:
-                    AdminMenuBuilder.Draw(key, context);
+                    await adminMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F2:
-                    AdminMenuBuilder.Draw(key, context);
+                    await adminMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F3:
-                    AdminMenuBuilder.Draw(key, context);
+                    await adminMenuBuilder.Draw(key, context);
                     break;
             }
         }

@@ -6,7 +6,7 @@ namespace console_online_store
     {
         static void Main(string[] args)
         {
-            MainMenu.Start();
+            MainMenu.StartAsync();
         }
     }
 }

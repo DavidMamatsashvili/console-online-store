@@ -5,6 +5,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using console_online_store.Controllers;
 using console_online_store.Data;
 using console_online_store.InputHandlers;
 using console_online_store.MenuCore;
@@ -20,6 +21,15 @@ namespace console_online_store.MenuBuilder
             { ConsoleKey.F2, "Show Products" },
             { ConsoleKey.F3, "Register" }
         };
+        public LoginController LoginController { get; set; }
+        public RegistrationController RegistrationController { get; set; }
+        public ProductController ProductController { get; set; }
+        public GuestMenuBuilder(LoginController loginController,RegistrationController registrationController, ProductController productController)
+        {
+            LoginController = loginController;
+            RegistrationController = registrationController;
+            ProductController = productController;
+        }
         public void DisplayMenuItems()
         {
             foreach (var i in Items)
@@ -73,18 +83,21 @@ namespace console_online_store.MenuBuilder
             Console.WriteLine(x);
         }
 
-        public void Draw(ConsoleKey key, MenuContext context)
+        public async Task Draw(ConsoleKey key, MenuContext context)
         {
             switch (key)
             {
                 case ConsoleKey.F1:
-                    Login(context);
+                    //Login(context);
+                    await LoginController.UserLogin();
                     break;
                 case ConsoleKey.F2:
-                    ShowProducts();
+                    //ShowProducts();
+                    await ProductController.ShowAllProducts();
                     break;
                 case ConsoleKey.F3:
-                    Register();
+                    //Register();
+                    await RegistrationController.NewUserRegistration();
                     break;
                 default:
                     DisplayMenuItems();

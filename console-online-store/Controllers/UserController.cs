@@ -14,8 +14,8 @@ namespace console_online_store.Controllers
     public class UserController
     {
         public MenuContext _context;
-        public UserBalanceRepository _userService;
-        public UserController(MenuContext context, UserBalanceRepository service)
+        public UserBalanceService _userService;
+        public UserController(MenuContext context, UserBalanceService service)
         {
             _context = context;
             _userService = service;

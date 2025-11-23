@@ -53,5 +53,11 @@ namespace console_online_store.Controllers
                 return;
             }
         }
+
+        public async Task Logout()
+        {
+            _context.showGuestMenu = true;
+            _context.UserId = 0;
+        }
     }
 }

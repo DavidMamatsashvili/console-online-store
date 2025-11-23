@@ -10,19 +10,19 @@ namespace console_online_store.InputHandlers
 {
     public class GuestInputHandler
     {
-        public void CheckInput(ConsoleKey key, MenuContext context, GuestMenuBuilder guestMenuBuilder)
+        public async Task CheckInput(ConsoleKey key, MenuContext context, GuestMenuBuilder guestMenuBuilder)
         {
             //GuestMenuBuilder.Draw(key);
             switch (key)
             {
                 case ConsoleKey.F1:
-                    guestMenuBuilder.Draw(key, context);
+                    await guestMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F2:
-                    guestMenuBuilder.Draw(key, context);
+                    await guestMenuBuilder.Draw(key, context);
                     break;
                 case ConsoleKey.F3:
-                    guestMenuBuilder.Draw(key, context);
+                    await guestMenuBuilder.Draw(key, context);
                     break;
             }
         }
