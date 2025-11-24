@@ -40,8 +40,9 @@ namespace console_online_store.Controllers
             }
 
             User? user = await _userRegistrationService.LoginUser(login, password);
+            bool isbanned = user.IsBanned;
 
-            if (user.IsBanned)
+            if (isbanned)
             {
                 Console.WriteLine("User is banned");
                 return;
@@ -66,10 +67,6 @@ namespace console_online_store.Controllers
 
         public async Task Logout()
         {
-            //_context.showGuestMenu = true;
-            //_context.UserId = 0;
-            //_context.Login = null;
-
             _context.State = State.Guest;
             _context.showGuestMenu = true;
             _context.showAdminMenu = false;

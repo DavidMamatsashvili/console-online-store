@@ -25,11 +25,11 @@ namespace console_online_store.Controllers
         {
             Console.WriteLine("**********");
             Console.WriteLine("User orders:");
-            IEnumerable<CustomerOrder> orders = await _customerOrderService.GetOrdersFromUser(_context.UserId);
+            IEnumerable<CustomerOrder>? orders = await _customerOrderService.GetAllOrders();
             foreach (CustomerOrder order in orders)
             {
                 OrderState state = await _customerOrderService.GetOrderState(order.OrderStateId);
-                Console.WriteLine($"{order.Id}. Operation Time:{order.OperationTime} Order State:{state.StateName} Total Amount:{order.TotalAmount}");
+                Console.WriteLine($"Order id:{order.Id}. Operation Time:{order.OperationTime}, Order State:{state.StateName}, Total Amount:{order.TotalAmount}");
             }
         }
 
@@ -67,7 +67,7 @@ namespace console_online_store.Controllers
             IEnumerable<OrderState> states = await _customerOrderService.GetStates();
             foreach (OrderState state in states)
             {
-                Console.WriteLine($"Id:{state.Id}, State Name{state.StateName}");
+                Console.WriteLine($"Id:{state.Id}, State Name : {state.StateName}");
             }
 
             Console.WriteLine("Enter order state id");

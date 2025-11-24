@@ -8,8 +8,8 @@ namespace console_online_store.Dto
 {
     public partial class CustomerOrderDto
     {
+        public int CustomerId { get; set; }
         public int OrderStateId { get; set; }
-
         public decimal TotalAmount { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace console_online_store.Services.Implementations
         }
         public async Task<bool> CheckIfUserExists(string login)
         {
-            if (!string.IsNullOrEmpty(login)) return false;
+            if (string.IsNullOrEmpty(login)) return false;
             bool exists = await _userRepository.CheckIfUserExists(login);
             return exists;
         }
@@ -60,6 +60,5 @@ namespace console_online_store.Services.Implementations
             User? user = await _userRepository.GetUserById(id);
             return user;
         }
-
     }
 }

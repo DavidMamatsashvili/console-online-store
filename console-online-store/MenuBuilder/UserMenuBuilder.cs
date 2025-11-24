@@ -47,45 +47,20 @@ namespace console_online_store.MenuBuilder
             Console.WriteLine(Items.ElementAt(Items.Count - 1).Value);
         }
 
-        public void ShowProducts()
-        {
-            using var context = new StoreDbContext();
-            for (int i = 0; i < 3; i++)
-            {
-                Console.WriteLine($"product{i + 1}:iphone");
-            }
-        }
-
-        public void Logout(MenuContext context)
-        {
-            context.State = State.Guest;
-            context.showGuestMenu = true;
-            context.showAdminMenu = false;
-            Console.Clear();
-        }
-
-        public void Esc()
-        {
-
-        }
-
         public async Task Draw(ConsoleKey key, MenuContext context)
         {
             switch (key)
             {
                 case ConsoleKey.F1:
-                    //Logout(context);
                     await LoginController.Logout();
                     break;
                 case ConsoleKey.F2:
-                    //ShowProducts();
                     await UserController.DepositUserBalance();
                     break;
                 case ConsoleKey.F3:
                     await UserController.WithdrawUserBalance();
                     break;
                 case ConsoleKey.F4:
-                    //Register(state);
                     await ProductController.ShowAllProducts();
                     break;
                 case ConsoleKey.F5:

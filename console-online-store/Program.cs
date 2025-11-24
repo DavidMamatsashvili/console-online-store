@@ -16,12 +16,6 @@ namespace console_online_store
     {
         static async Task Main(string[] args)
         {
-            //using StoreDbContext db = new StoreDbContext();
-            //CartRepository repo = new CartRepository(db);
-            //IEnumerable<CartItem> prd = await repo.GetAllProductsFromCart(1);
-            //foreach (CartItem item in prd){
-            //    Console.WriteLine(item.UnitPrice);
-            //}
             await MainMenu.StartAsync();
         }
     }

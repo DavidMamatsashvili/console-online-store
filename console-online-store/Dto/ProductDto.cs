@@ -9,9 +9,7 @@ namespace console_online_store.Dto
     public partial class ProductDto
     {
         public decimal UnitPrice { get; set; }
-
         public int Stock { get; set; }
-
         public string? Description { get; set; }
     }
 }

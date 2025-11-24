@@ -18,17 +18,14 @@ namespace console_online_store.Services.Implementations
         {
             _repo = repo;
         }
-
         public Task<IEnumerable<Product>> GetAllProducts()
         {
             return _repo.GetAllProducts();
         }
-
         public async Task<Product?> GetProductById(int id)
         {
             return await _repo.GetProductById(id);
         }
-
         public async Task<ProductDto?> AddProduct(ProductDto product)
         {
             if (product == null) return null;
@@ -36,7 +33,6 @@ namespace console_online_store.Services.Implementations
             await _repo.AddProduct(product);
             return product;
         }
-
         public async Task<ProductDto?> UpdateProduct(int id, ProductDto product)
         {
             if (product == null) return null;
@@ -47,7 +43,6 @@ namespace console_online_store.Services.Implementations
             await _repo.UpdateProduct(id, product);
             return product;
         }
-
         public async Task<bool> DeleteProduct(int id)
         {
             var product = await _repo.GetProductById(id);
@@ -56,7 +51,6 @@ namespace console_online_store.Services.Implementations
             await _repo.DeleteProduct(id);
             return true;
         }
-
         public async Task<Manufacturer> GetProductManufacturerById(int id)
         {
             if (id <= 0) return null;

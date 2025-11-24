@@ -106,6 +106,7 @@ namespace console_online_store.Controllers
                     User? user = await _userBalanceService.WithdrawBalance(_context.UserId, total);
                     CustomerOrderDto customerOrderDto = new CustomerOrderDto()
                     {
+                        CustomerId = _context.UserId,
                         OrderStateId = 1,
                         TotalAmount = total
                     };
@@ -150,6 +151,5 @@ namespace console_online_store.Controllers
                 Console.WriteLine($"{get.ProductTitleId}. Product Title:{produtTitleName} Manufacturer:{manufacturerName} Price:{product.UnitPrice}$");
             }
         }
-
     }
 }

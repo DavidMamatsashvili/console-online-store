@@ -9,7 +9,6 @@ namespace console_online_store.Dto
     public class CartDto
     {
         public int UserId { get; set; }
-
         public DateTime CreatedAt { get; set; }
     }
 }

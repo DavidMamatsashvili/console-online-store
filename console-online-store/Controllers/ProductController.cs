@@ -56,7 +56,6 @@ namespace console_online_store.Controllers
             if (updated != null)
             {
                 Console.WriteLine("Product sucessfuly updated");
-                _context.showAdminMenu = true;
             }
             else
             {

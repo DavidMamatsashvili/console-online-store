@@ -18,7 +18,6 @@ namespace console_online_store.Repository.Implementations
         {
             _dbContext = dbContext;
         }
-
         public async Task<CustomerOrder> CancelOrderByUser(int id)
         {
             CustomerOrder? order = await _dbContext.CustomerOrders.FindAsync(id);
@@ -26,7 +25,6 @@ namespace console_online_store.Repository.Implementations
             await _dbContext.SaveChangesAsync();
             return order;
         }
-
         public async Task<CustomerOrder> CancelOrderByAdministrator(int id)
         {
             CustomerOrder? order = await _dbContext.CustomerOrders.FindAsync(id);
@@ -34,7 +32,6 @@ namespace console_online_store.Repository.Implementations
             await _dbContext.SaveChangesAsync();
             return order;
         }
-
         public async Task<CustomerOrder> ChangeOrderState(int id, int state)
         {
             CustomerOrder? oldorder = await _dbContext.CustomerOrders.FindAsync(id);
@@ -42,11 +39,11 @@ namespace console_online_store.Repository.Implementations
             await _dbContext.SaveChangesAsync();
             return oldorder;
         }
-
         public async Task<CustomerOrder> CreateOrder(CustomerOrderDto order)
         {
             CustomerOrder neworder = new CustomerOrder()
             {
+                CustomerId = order.CustomerId,
                 OrderStateId = order.OrderStateId,
                 TotalAmount = order.TotalAmount
             };
@@ -54,19 +51,16 @@ namespace console_online_store.Repository.Implementations
             await _dbContext.SaveChangesAsync();
             return neworder;
         }
-
         public async Task<CustomerOrder> GetOrderById(int id)
         {
             CustomerOrder? order = await _dbContext.CustomerOrders.FindAsync(id);
             return order;
         }
-
         public async Task<IEnumerable<CustomerOrder>> GetAllOrders()
         {
             IEnumerable<CustomerOrder> orders = await _dbContext.CustomerOrders.ToListAsync();
             return orders;
         }
-
         public async Task<bool> CheckIfOrderExists(int id)
         {
             bool exists = await _dbContext.CustomerOrders.AnyAsync(x => x.Id == id);
@@ -74,7 +68,7 @@ namespace console_online_store.Repository.Implementations
         }
         public async Task<IEnumerable<CustomerOrder>> GetOrdersFromUser(int userid)
         {
-            IEnumerable<CustomerOrder>? orders = await _dbContext.CustomerOrders.Include(x => x.CustomerOrderDetails).Where(x => x.CustomerId == userid).ToListAsync();
+            IEnumerable<CustomerOrder>? orders = await _dbContext.CustomerOrders.Include(x => x.CustomerOrderDetails).Include(o => o.OrderState).Where(x => x.CustomerId == userid).ToListAsync();
             return orders;
         }
         public async Task<OrderState> GetOrderState(int id)
@@ -84,7 +78,7 @@ namespace console_online_store.Repository.Implementations
         }
         public async Task<IEnumerable<OrderState>> GetStates()
         {
-            IEnumerable<OrderState> states = await _dbContext.OrderStates.ToListAsync();
+            IEnumerable<OrderState> states = await _dbContext.OrderStates.OrderBy(x => x.Id).ToListAsync();
             return states;
         }
     }

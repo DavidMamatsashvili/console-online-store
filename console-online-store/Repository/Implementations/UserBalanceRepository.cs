@@ -30,7 +30,6 @@ namespace console_online_store.Repository.Implementations
             await _dbContext.SaveChangesAsync();
             return user;
         }
-
         public async Task<User> WithdrawBalance(int userid, decimal amount)
         {
             User? user = await _dbContext.Users.FindAsync(userid);

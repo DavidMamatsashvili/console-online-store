@@ -62,7 +62,7 @@ namespace console_online_store.MenuCore
             LoginController loginController = new LoginController(context, userLoginService);
             OrderController orderController = new OrderController(context, customerOrderService, orderStateService);
             ProductController productController = new ProductController(context, productService);
-            RegistrationController registrationController = new RegistrationController(context, userRegistrationService, userLoginService, cartService);
+            RegistrationController registrationController = new RegistrationController(context, userRegistrationService, userLoginService, cartService, userService);
             UserController userController = new UserController(context, userBalanceService);
 
             GuestMenuBuilder guestMenuBuilder = new GuestMenuBuilder(loginController, registrationController, productController);

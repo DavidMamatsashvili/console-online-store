@@ -12,7 +12,6 @@ namespace console_online_store.InputHandlers
     {
         public async Task CheckInput(ConsoleKey key, MenuContext context, UserMenuBuilder userMenuBuilder)
         {
-            //GuestMenuBuilder.Draw(key);
             switch (key)
             {
                 case ConsoleKey.F1:

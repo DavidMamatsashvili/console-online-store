@@ -16,12 +16,14 @@ namespace console_online_store.Controllers
         public UserRegistrationService _userRegistrationService;
         public UserLoginService _userLoginService;
         public CartService _cartService;
-        public RegistrationController(MenuContext context, UserRegistrationService registrationservice, UserLoginService loginservice, CartService cartService)
+        public UserService _userService;
+        public RegistrationController(MenuContext context, UserRegistrationService registrationservice, UserLoginService loginservice, CartService cartService, UserService userService)
         {
             _context = context;
             _userRegistrationService = registrationservice;
             _userLoginService = loginservice;
             _cartService = cartService;
+            _userService = userService;
         }
         public async Task NewUserRegistration()
         {
@@ -34,6 +36,13 @@ namespace console_online_store.Controllers
 
             Console.WriteLine("Login");
             string? login = Console.ReadLine();
+        
+            bool exists = await _userService.CheckIfUserExists(login);
+            if (exists)
+            {
+                Console.WriteLine("User with the same login already exists");
+                return;
+            }
 
             Console.WriteLine("Password");
             string? password = Console.ReadLine();
