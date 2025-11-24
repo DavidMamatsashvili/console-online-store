@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Data;
@@ -22,7 +21,7 @@ namespace console_online_store.Repository.Implementations
 
         public async Task<User> Login(string login)
         {
-            return await _dbContext.Users?.SingleOrDefaultAsync(x=>x.Login==login);
+            return await _dbContext.Users?.SingleOrDefaultAsync(x => x.Login == login);
         }
 
         public async Task<User> CreateUser(UserDto user)
@@ -62,6 +61,13 @@ namespace console_online_store.Repository.Implementations
         public async Task<bool> CheckIfUserExists(string login)
         {
             return await _dbContext.Users.AnyAsync(user => user.Login == login);
+        }
+        public async Task<User> GetUserById(int id)
+        {
+            User? user = await _dbContext.Users.Include(u => u.Cart)
+                                               .ThenInclude(c => c.CartItems)
+                                               .FirstOrDefaultAsync(u => u.Id == id);
+            return user;
         }
     }
 }

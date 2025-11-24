@@ -44,7 +44,7 @@ namespace console_online_store.Services.Implementations
             if (id <= 0 || state > 4 || state <= 0) return null;
             if (!await _orderRepository.CheckIfOrderExists(id)) return null;
 
-            CustomerOrder? order = await _orderRepository.ChangeOrderState(id,state);
+            CustomerOrder? order = await _orderRepository.ChangeOrderState(id, state);
             return order;
         }
 

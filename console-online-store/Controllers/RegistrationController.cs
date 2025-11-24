@@ -7,7 +7,6 @@ using console_online_store.Dto;
 using console_online_store.MenuCore;
 using console_online_store.Models;
 using console_online_store.Services.Implementations;
-using Microsoft.Identity.Client;
 
 namespace console_online_store.Controllers
 {
@@ -52,7 +51,7 @@ namespace console_online_store.Controllers
             };
 
             await _userRegistrationService.CreateUser(user);
-            User loginnedUser = await _userLoginService.LoginUser(login,password);
+            User loginnedUser = await _userLoginService.LoginUser(login, password);
             int userid = loginnedUser.Id;
             Cart cart = await _cartService.CreateCart(userid);
 
@@ -60,6 +59,7 @@ namespace console_online_store.Controllers
             {
                 _context.State = State.User;
                 _context.UserId = userid;
+                _context.Login = login;
             }
             else
             {

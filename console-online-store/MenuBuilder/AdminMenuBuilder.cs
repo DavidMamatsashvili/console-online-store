@@ -38,7 +38,7 @@ namespace console_online_store.MenuBuilder
 
         public void DisplayMenuItems()
         {
-            for (int i = 0; i < Items.Count - 1; i++) 
+            for (int i = 0; i < Items.Count - 1; i++)
             {
                 Console.WriteLine($"<{Items.ElementAt(i).Key}> : {Items.ElementAt(i).Value}");
             }
@@ -64,7 +64,7 @@ namespace console_online_store.MenuBuilder
 
         public void Esc()
         {
-            
+
         }
 
         public async Task Draw(ConsoleKey key, MenuContext context)

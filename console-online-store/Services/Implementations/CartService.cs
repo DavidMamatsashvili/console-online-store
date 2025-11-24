@@ -14,12 +14,12 @@ namespace console_online_store.Services.Implementations
     {
         public readonly ICartRepository _cartRepository;
         public readonly IProductRepository _productRepository;
-        public CartService(ICartRepository cartrepo, IProductRepository productrepo) 
+        public CartService(ICartRepository cartrepo, IProductRepository productrepo)
         {
             _cartRepository = cartrepo;
             _productRepository = productrepo;
         }
-        
+
         public async Task<Cart> CreateCart(int userid)
         {
             if (userid <= 0) return null;
@@ -69,7 +69,7 @@ namespace console_online_store.Services.Implementations
             if (!exists) return null;
 
             CartItem updatedItem = await _cartRepository.EditCartItem(cartId, cartItemId, cartitem);
-            
+
             return updatedItem;
         }
         public async Task<bool> CheckIfCartHasThisProduct(int cartId, int productId)
@@ -80,8 +80,8 @@ namespace console_online_store.Services.Implementations
             if (!productExists || checkIfCartExists) return false;
 
             bool checkIfCartHasThisProduct = await _cartRepository.CheckIfCartHasThisProduct(cartId, productId);
-            
-            if(!checkIfCartHasThisProduct) return false;
+
+            if (!checkIfCartHasThisProduct) return false;
             return true;
         }
         public async Task<bool> CheckIfCartExists(int cartId)
@@ -100,7 +100,7 @@ namespace console_online_store.Services.Implementations
             if (!productExists || checkIfCartExists) return false;
 
             bool checkIfCartItemExists = await _cartRepository.CheckIfCartItemExists(cartId, itemId);
-            if(!checkIfCartItemExists) return false;
+            if (!checkIfCartItemExists) return false;
             return true;
         }
         public async Task<decimal> GetTotalAmount(int cartId)

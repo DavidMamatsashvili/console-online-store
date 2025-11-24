@@ -53,6 +53,13 @@ namespace console_online_store.Services.Implementations
             bool exists = await _userRepository.CheckIfUserExists(login);
             return exists;
         }
+        public async Task<User> GetUserById(int id)
+        {
+            if (id <= 0) return null;
+         
+            User? user = await _userRepository.GetUserById(id);
+            return user;
+        }
 
     }
 }

@@ -70,7 +70,7 @@ namespace console_online_store.Repository.Implementations
         }
         public async Task<ProductTitle> GetProductTitleById(int id)
         {
-            ProductTitle? title = await _dbContext.ProductTitles.SingleOrDefaultAsync(x=>x.Id == id);
+            ProductTitle? title = await _dbContext.ProductTitles.SingleOrDefaultAsync(x => x.Id == id);
             return title;
         }
     }

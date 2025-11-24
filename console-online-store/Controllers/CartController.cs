@@ -17,13 +17,19 @@ namespace console_online_store.Controllers
         public ProductService _productService;
         public CustomerOrderService _customerOrderService;
         public UserBalanceService _userBalanceService;
-        public CartController(MenuContext context, CartService service, ProductService productService, CustomerOrderService customerOrderService, UserBalanceService userBalanceService )
+        public UserService _userService;
+        public ProductTitleService _productTitleService;
+        public ManufacturerService _manufacturerService;
+        public CartController(MenuContext context, CartService service, ProductService productService, CustomerOrderService customerOrderService, UserBalanceService userBalanceService, UserService userService, ProductTitleService productTitleService, ManufacturerService manufacturerService  )
         {
             _context = context;
             _cartService = service;
             _productService = productService;
             _customerOrderService = customerOrderService;
             _userBalanceService = userBalanceService;
+            _userService = userService;
+            _productTitleService = productTitleService;
+            _manufacturerService = manufacturerService;
         }
 
         public async Task AddItemInCart()
@@ -85,9 +91,9 @@ namespace console_online_store.Controllers
             Console.WriteLine("**********");
             decimal total = await _cartService.GetTotalAmount(_context.UserId);
             Console.WriteLine($"Total Amount:{total}");
-            Console.WriteLine("Do you want to pay now? yes/no");
+            Console.WriteLine("Do you want to pay now? input yes/no");
             string? input = Console.ReadLine();
-            if(input == "yes")
+            if (input == "yes")
             {
                 decimal balance = await _userBalanceService.GetUserBalance(_context.UserId);
                 if (balance < total)
@@ -116,6 +122,34 @@ namespace console_online_store.Controllers
                 }
             }
         }
-       
+
+        public async Task ViewProductsInCart()
+        {
+            Console.WriteLine("**********");
+            Console.WriteLine("Cart:");
+
+            User? user = await _userService.GetUserById(_context.UserId);
+
+            Cart? cart = user.Cart;
+            int cartid = cart.Id;
+            IEnumerable<CartItem> products = await _cartService.GetAllProductsFromCart(cartid);
+
+            foreach (CartItem product in products)
+            {
+                int productId = product.ProductId;
+                Product? get = await _productService.GetProductById(productId);
+
+                int manufacturerId = get.ManufacturerId;
+                Manufacturer? manufacturer = await _manufacturerService.GetManufacturerByManufacturerId(manufacturerId);
+                string? manufacturerName = manufacturer.ManufacturerName;
+
+                int productTitleId = get.ProductTitleId;
+                ProductTitle? title = await _productTitleService.GetProductTitleByTitleId(productTitleId);
+                string? produtTitleName = title.ProductTitle1;
+
+                Console.WriteLine($"{get.ProductTitleId}. Product Title:{produtTitleName} Manufacturer:{manufacturerName} Price:{product.UnitPrice}$");
+            }
+        }
+
     }
 }

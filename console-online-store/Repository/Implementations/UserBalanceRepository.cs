@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using console_online_store.Data;
 using console_online_store.Models;
 using console_online_store.Repository.Interfaces;
-using Microsoft.Identity.Client;
 
 namespace console_online_store.Repository.Implementations
 {

@@ -13,7 +13,7 @@ namespace console_online_store.Controllers
     {
         public MenuContext _context;
         public UserService _userService;
-       
+
         public BanController(MenuContext context, UserService userService)
         {
             _context = context;

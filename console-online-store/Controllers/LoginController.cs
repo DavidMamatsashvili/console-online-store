@@ -23,7 +23,7 @@ namespace console_online_store.Controllers
         {
             Console.WriteLine("**********");
             Console.WriteLine("Login:");
-            string? login  = Console.ReadLine();
+            string? login = Console.ReadLine();
 
             Console.WriteLine("Password:");
             string? password = Console.ReadLine();
@@ -31,6 +31,11 @@ namespace console_online_store.Controllers
             if (login == "admin" && password == "admin")
             {
                 _context.State = State.Admin;
+                _context.showGuestMenu = false;
+                _context.showAdminMenu = true;
+                _context.showUserMenu = false;
+                _context.UserId = 0;
+                Console.Clear();
                 return;
             }
 
@@ -46,6 +51,11 @@ namespace console_online_store.Controllers
             {
                 _context.State = State.User;
                 _context.UserId = user.Id;
+                _context.Login = login;
+                _context.showGuestMenu = false;
+                _context.showAdminMenu = false;
+                _context.showUserMenu = true;
+                Console.Clear();
             }
             else
             {
@@ -56,8 +66,16 @@ namespace console_online_store.Controllers
 
         public async Task Logout()
         {
+            //_context.showGuestMenu = true;
+            //_context.UserId = 0;
+            //_context.Login = null;
+
+            _context.State = State.Guest;
             _context.showGuestMenu = true;
+            _context.showAdminMenu = false;
+            _context.showUserMenu = false;
             _context.UserId = 0;
+            Console.Clear();
         }
     }
 }

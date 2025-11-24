@@ -24,6 +24,18 @@ namespace console_online_store.InputHandlers
                 case ConsoleKey.F3:
                     await adminMenuBuilder.Draw(key, context);
                     break;
+                case ConsoleKey.F4:
+                    await adminMenuBuilder.Draw(key, context);
+                    break;
+                case ConsoleKey.F5:
+                    await adminMenuBuilder.Draw(key, context);
+                    break;
+                case ConsoleKey.F6:
+                    await adminMenuBuilder.Draw(key, context);
+                    break;
+                case ConsoleKey.F7:
+                    await adminMenuBuilder.Draw(key, context);
+                    break;
             }
         }
     }

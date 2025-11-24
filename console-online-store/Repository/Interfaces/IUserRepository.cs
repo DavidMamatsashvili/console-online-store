@@ -15,5 +15,6 @@ namespace console_online_store.Repository.Interfaces
         Task<User> BanUser(int userId);
         Task<User> UnbanUser(int userId);
         Task<bool> CheckIfUserExists(string login);
+        Task<User> GetUserById(int id);
     }
 }

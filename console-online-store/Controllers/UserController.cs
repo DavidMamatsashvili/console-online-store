@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using console_online_store.MenuCore;
 using console_online_store.Models;
-using console_online_store.Repository.Implementations;
 using console_online_store.Services.Implementations;
 
 namespace console_online_store.Controllers
@@ -32,7 +30,7 @@ namespace console_online_store.Controllers
             {
                 Console.WriteLine("sucessfully deposited on account");
             }
-            else 
+            else
             {
                 Console.WriteLine("error occured during deposit");
                 return;

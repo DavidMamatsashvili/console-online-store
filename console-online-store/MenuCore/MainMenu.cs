@@ -7,6 +7,7 @@ using console_online_store.Controllers;
 using console_online_store.Data;
 using console_online_store.InputHandlers;
 using console_online_store.MenuBuilder;
+using console_online_store.Models;
 using console_online_store.Repository.Implementations;
 using console_online_store.Repository.Interfaces;
 using console_online_store.Services.Implementations;
@@ -26,6 +27,7 @@ namespace console_online_store.MenuCore
         public bool showAdminMenu { get; set; } = false;
         public bool showUserMenu { get; set; } = false;
         public int UserId { get; set; }
+        public string? Login { get; set; } = null;
     }
 
     public static class MainMenu
@@ -38,31 +40,39 @@ namespace console_online_store.MenuCore
             IProductRepository productRepository = new ProductRepository(dbContext);
             IUserBalanceRepository userBalanceRepository = new UserBalanceRepository(dbContext);
             IUserRepository userRepository = new UserRepository(dbContext);
+            IOrderStateRepository orderStateRepository = new OrderStateRepository(dbContext);
+            IProductTitleRepository productTitleRepository = new ProductTitleRepository(dbContext);
+            IManufacturerRepository manufacturerRepository = new ManufacturerRepository(dbContext);
 
             MenuContext context = new MenuContext();
 
-            CartService cartService = new CartService(cartRepository,productRepository);
+            CartService cartService = new CartService(cartRepository, productRepository);
             CustomerOrderService customerOrderService = new CustomerOrderService(customerOrderRepository);
             ProductService productService = new ProductService(productRepository);
             UserBalanceService userBalanceService = new UserBalanceService(userBalanceRepository);
             UserLoginService userLoginService = new UserLoginService(userRepository);
             UserRegistrationService userRegistrationService = new UserRegistrationService(userRepository);
             UserService userService = new UserService(userRepository);
+            OrderStateService orderStateService = new OrderStateService(orderStateRepository);
+            ProductTitleService productTitleService = new ProductTitleService(productTitleRepository);
+            ManufacturerService manuafacturerService = new ManufacturerService(manufacturerRepository);
 
-            BanController banController = new BanController(context,userService);
-            CartController cartController = new CartController(context,cartService,productService,customerOrderService,userBalanceService);
-            LoginController loginController = new LoginController(context,userLoginService);
-            OrderController orderController = new OrderController(context, customerOrderService);
-            ProductController productController = new ProductController(context,productService);
-            RegistrationController registrationController = new RegistrationController(context,userRegistrationService,userLoginService,cartService);
+            BanController banController = new BanController(context, userService);
+            CartController cartController = new CartController(context, cartService, productService, customerOrderService, userBalanceService, userService, productTitleService,manuafacturerService);
+            LoginController loginController = new LoginController(context, userLoginService);
+            OrderController orderController = new OrderController(context, customerOrderService, orderStateService);
+            ProductController productController = new ProductController(context, productService);
+            RegistrationController registrationController = new RegistrationController(context, userRegistrationService, userLoginService, cartService);
             UserController userController = new UserController(context, userBalanceService);
 
-            GuestMenuBuilder guestMenuBuilder = new GuestMenuBuilder(loginController,registrationController,productController);
+            GuestMenuBuilder guestMenuBuilder = new GuestMenuBuilder(loginController, registrationController, productController);
             GuestInputHandler guestInputHandler = new GuestInputHandler();
 
-            AdminMenuBuilder adminMenuBuilder = new AdminMenuBuilder(loginController,productController,orderController,banController);
+            AdminMenuBuilder adminMenuBuilder = new AdminMenuBuilder(loginController, productController, orderController, banController);
             AdminInputHandler adminInputHandler = new AdminInputHandler();
 
+            UserMenuBuilder userMenuBuilder = new UserMenuBuilder(loginController, productController, orderController, userController, cartController);
+            UserInputHandler userInputHandler = new UserInputHandler();
 
             while (true)
             {
@@ -102,6 +112,24 @@ namespace console_online_store.MenuCore
                         continue;
                     }
                     await adminInputHandler.CheckInput(key, context, adminMenuBuilder);
+                }
+                if (context.State == State.User)
+                {
+                    if (context.showUserMenu)
+                    {
+                        userMenuBuilder.DisplayMenuItems();
+                        context.showUserMenu = false;
+                    }
+
+                    var key = Console.ReadKey(true).Key;
+
+                    if (key == ConsoleKey.Escape)
+                    {
+                        context.showUserMenu = true;
+                        Console.Clear();
+                        continue;
+                    }
+                    await userInputHandler.CheckInput(key, context, userMenuBuilder);
                 }
             }
         }

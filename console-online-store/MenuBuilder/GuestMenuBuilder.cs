@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Controllers;
 using console_online_store.Data;
-using console_online_store.InputHandlers;
 using console_online_store.MenuCore;
 using console_online_store.Models;
 
 namespace console_online_store.MenuBuilder
 {
     public class GuestMenuBuilder
-    {  
-        public Dictionary<ConsoleKey,string>Items = new Dictionary<ConsoleKey, string>
+    {
+        public Dictionary<ConsoleKey, string> Items = new Dictionary<ConsoleKey, string>
         {
             { ConsoleKey.F1, "Login" },
             { ConsoleKey.F2, "Show Products" },
@@ -24,7 +21,7 @@ namespace console_online_store.MenuBuilder
         public LoginController LoginController { get; set; }
         public RegistrationController RegistrationController { get; set; }
         public ProductController ProductController { get; set; }
-        public GuestMenuBuilder(LoginController loginController,RegistrationController registrationController, ProductController productController)
+        public GuestMenuBuilder(LoginController loginController, RegistrationController registrationController, ProductController productController)
         {
             LoginController = loginController;
             RegistrationController = registrationController;
@@ -42,7 +39,7 @@ namespace console_online_store.MenuBuilder
         public void ShowProducts()
         {
             using var context = new StoreDbContext();
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Console.WriteLine($"product{i + 1}:iphone");
             }
@@ -50,7 +47,7 @@ namespace console_online_store.MenuBuilder
 
         //if guest can login then change state into State.User or State.Admin
         //login will use controller to check for a user in a database
-        public void Login(MenuContext context) 
+        public void Login(MenuContext context)
         {
             Console.WriteLine("Login:");
             var x = Console.ReadLine();
@@ -66,9 +63,9 @@ namespace console_online_store.MenuBuilder
                 context.showAdminMenu = true;
                 context.showGuestMenu = false;
             }
-            
+
             if (context.State != State.Guest) Console.Clear();
-          
+
             //if (x == "user") state = State.User;
             //if (x == "admin") state = State.Admin;
             //if (state != State.Guest) Console.Clear();

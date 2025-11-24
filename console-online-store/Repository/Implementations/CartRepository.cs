@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Data;
@@ -15,7 +14,7 @@ namespace console_online_store.Repository.Implementations
     public class CartRepository : ICartRepository
     {
         private readonly StoreDbContext _dbContext;
-        public CartRepository(StoreDbContext dbContext) 
+        public CartRepository(StoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -39,7 +38,7 @@ namespace console_online_store.Repository.Implementations
         public async Task<IEnumerable<CartItem>> GetAllProductsFromCart(int id)
         {
             IEnumerable<CartItem>? items = await _dbContext.CartItems
-                .Where(x => x.CartId==id)
+                .Where(x => x.CartId == id)
                 .ToListAsync();
             return items;
         }
@@ -100,7 +99,7 @@ namespace console_online_store.Repository.Implementations
             bool checkcart = await CheckIfCartExists(cartId);
             if (!checkcart) return false;
 
-            Cart? cart = await _dbContext.Carts.Include(x =>x.CartItems).SingleOrDefaultAsync(x =>x.Id == cartId);
+            Cart? cart = await _dbContext.Carts.Include(x => x.CartItems).SingleOrDefaultAsync(x => x.Id == cartId);
             if (cart == null) return false;
 
             bool exists = cart.CartItems.Any(x => x.Id == cartItemId);
@@ -110,7 +109,7 @@ namespace console_online_store.Repository.Implementations
         {
             Cart? cart = await GetCartById(cartId);
             decimal total = 0;
-            foreach(var item in cart.CartItems)
+            foreach (var item in cart.CartItems)
             {
                 total += item.UnitPrice;
             }

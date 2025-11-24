@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using console_online_store.Models;
 
-namespace console_online_store.Services.Interfaces
+namespace console_online_store.Repository.Interfaces
 {
-    public interface IUserLoginService
+    public interface IOrderStateRepository
     {
-        Task<User> LoginUser(string login, string password);
+        Task<OrderState> GetOrderStateByStateId(int orderId);
     }
 }

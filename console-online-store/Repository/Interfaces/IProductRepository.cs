@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using console_online_store.Dto;
 using console_online_store.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace console_online_store.Repository.Interfaces
 {
