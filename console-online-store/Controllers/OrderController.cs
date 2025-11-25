@@ -93,7 +93,7 @@ namespace console_online_store.Controllers
             {
                 int id = order.OrderStateId;
                 OrderState state = await _orderStateService.GetOrderStateByStateId(id);
-                Console.WriteLine($"{order.Id}. state:{state.StateName} Total Amount:{order.TotalAmount} TIme:{order.OperationTime}");
+                Console.WriteLine($"{order.Id}. state:{state.StateName} Total Amount:{order.TotalAmount} Time:{order.OperationTime}");
             }
         }
     }

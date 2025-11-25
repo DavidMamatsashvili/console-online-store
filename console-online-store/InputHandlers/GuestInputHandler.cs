@@ -12,18 +12,7 @@ namespace console_online_store.InputHandlers
     {
         public async Task CheckInput(ConsoleKey key, MenuContext context, GuestMenuBuilder guestMenuBuilder)
         {
-            switch (key)
-            {
-                case ConsoleKey.F1:
-                    await guestMenuBuilder.Draw(key, context);
-                    break;
-                case ConsoleKey.F2:
-                    await guestMenuBuilder.Draw(key, context);
-                    break;
-                case ConsoleKey.F3:
-                    await guestMenuBuilder.Draw(key, context);
-                    break;
-            }
+            await guestMenuBuilder.Draw(key, context);
         }
     }
 }
